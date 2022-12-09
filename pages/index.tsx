@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Head from 'next/head'
+import About from '../components/About';
 
 type HomeSectionProps = {
   id: string,
@@ -24,7 +25,7 @@ const HomeSection = ({
 
 export default function Home() {
   return (
-    <main className='max-h-screen overflow-y-scroll snap snap-y snap-mandatory scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100'>
+    <main className='max-h-screen overflow-y-scroll snap snap-y snap-mandatory scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100'>
       <Head>
         <title>Portfolio</title>
         <meta name="description" content="My portfolio" />
@@ -34,7 +35,7 @@ export default function Home() {
       <HomeSection
         id="about"
       >
-        About
+        <About />
       </HomeSection>
       <HomeSection
         id="xp"
