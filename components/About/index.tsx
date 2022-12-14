@@ -12,10 +12,12 @@ const About = (props: Props) => {
         className='flex flex-col items-center justify-between h-[100%]'
     >
         <SectionHeader
-            title='About'
+            title='About me'
         />
         <div
-            className='flex flex-col flex-1 items-center justify-center space-y-8 md:flex-row md:w-3/4 md:space-x-8'
+            className='flex flex-col flex-1 items-center space-y-8 lg:flex-row lg:w-3/4 md:space-x-8
+            mt-5
+            '
         >
             <motion.img
                 src="https://cataas.com/cat"
