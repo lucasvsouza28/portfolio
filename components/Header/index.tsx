@@ -31,20 +31,21 @@ const Header = ({}: Props) => {
     }, [buttonRef, isMenuOpen, setIsMenuOpen])
 
   return (
-    <header className='p-5 sticky'>
+    <header className='p-5 sticky z-50'>
         <button
             ref={buttonRef}
             onClick={() => setIsMenuOpen(true)}
-            className="md:hidden"
+            className="lg:hidden"
         >
             <GiHamburgerMenu
                 color='#FFF'
+                size={40}
             />
         </button>
 
         {isMenuOpen && (
             <motion.div
-                className='h-screen absolute p-4 bg-slate-100 top-0 w-3/5 md:hideen text-black'
+                className='h-screen absolute p-4 bg-slate-100 top-0 w-3/5 lg:hideen text-black'
                 initial={{
                     left: -500,
                     opacity: 0,
@@ -52,6 +53,10 @@ const Header = ({}: Props) => {
                 animate={{
                     left: 0,
                     opacity: 1,
+                }}
+                exit={{
+                    left: -500,
+                    opacity: 0,                    
                 }}
             >
                 <h1 className='text-2xl'>
@@ -77,7 +82,7 @@ const Header = ({}: Props) => {
         )}
 
         <div
-            className='hidden md:flex text-2xl tracking-widest flex-row justify-between items-center'
+            className='hidden lg:flex text-2xl tracking-widest flex-row justify-between items-center'
         >
             <div>
                 My Portfolio

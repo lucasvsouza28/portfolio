@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Head from 'next/head'
 import About from '../components/About';
+import Experiencies from '../components/Experiencies';
 
 type HomeSectionProps = {
   id: string,
@@ -40,7 +41,7 @@ export default function Home() {
       <HomeSection
         id="xp"
       >
-        Experience
+        <Experiencies />
       </HomeSection>
       <HomeSection
         id="techs"
