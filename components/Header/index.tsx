@@ -1,15 +1,15 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useCycle, AnimatePresence } from 'framer-motion'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
 type Props = {}
 
 const Header = ({}: Props) => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useCycle(false, true)
     const buttonRef = useRef(null);
     const links = [
-        { title: 'About', link: '#about' },
+        { title: 'About me', link: '#about' },
         { title: 'Experience', link: '#xp' },
         { title: 'Technologies', link: '#techs' },
         { title: 'Skills', link: '#skills' },
@@ -20,7 +20,7 @@ const Header = ({}: Props) => {
         const fn = (event: globalThis.MouseEvent) => {
             // @ts-ignore
             if (buttonRef.current && !buttonRef.current?.contains(event.target) && isMenuOpen) {
-                setIsMenuOpen(false)
+                setIsMenuOpen(0)
             }
         }
         document.addEventListener('click', fn)
@@ -31,10 +31,10 @@ const Header = ({}: Props) => {
     }, [buttonRef, isMenuOpen, setIsMenuOpen])
 
   return (
-    <header className='p-5 sticky z-50'>
+    <header className='px-5 py-2 sticky z-50'>
         <button
             ref={buttonRef}
-            onClick={() => setIsMenuOpen(true)}
+            onClick={() => setIsMenuOpen()}
             className="lg:hidden"
         >
             <GiHamburgerMenu
@@ -43,43 +43,50 @@ const Header = ({}: Props) => {
             />
         </button>
 
-        {isMenuOpen && (
-            <motion.div
-                className='h-screen absolute p-4 bg-slate-100 top-0 w-3/5 lg:hideen text-black'
-                initial={{
-                    left: -500,
-                    opacity: 0,
-                }}
-                animate={{
-                    left: 0,
-                    opacity: 1,
-                }}
-                exit={{
-                    left: -500,
-                    opacity: 0,                    
-                }}
-            >
-                <h1 className='text-2xl'>
-                    Portfolio
-                </h1>
+        <AnimatePresence>
+            {isMenuOpen && (
+                    <motion.div
+                        className='h-screen absolute p-4 bg-slate-100 top-0
+                        w-3/5 sm:w-2/5
+                        text-black
+                        lg:hideen
+                        '
+                        initial={{
+                            left: -500,
+                            opacity: 0,
+                        }}
+                        animate={{
+                            left: 0,
+                            opacity: 1,
+                        }}
+                        exit={{
+                            left: -500,
+                            opacity: [1, 1, .2, 0],
+                            transition: { duration: 0.5 }
+                        }}
+                    >
+                        <h1 className='text-2xl'>
+                            Portfolio
+                        </h1>
 
-                <ul className='mt-4 flex flex-col space-y-2'>
-                    { links.map((item, i) => (
-                        <li
-                            key={i}
-                            className="p-2 hover:border-b hover:border-b-[#CCC]"
-                        >
-                            <Link
-                                href={item.link}
-                                className='w-full'
-                            >
-                                <span className='font-bold'>#</span> {item.title}
-                            </Link>
-                        </li>
-                    )) }
-                </ul>
-            </motion.div>
-        )}
+                        <ul className='mt-4 flex flex-col space-y-2'>
+                            { links.map((item, i) => (
+                                <li
+                                    key={i}
+                                    className="p-2 hover:border-b hover:border-b-[#CCC]"
+                                >
+                                    <a
+                                        href={item.link}
+                                        className='w-full'
+                                    >
+                                        <span className='font-bold'>#</span> {item.title}
+                                    </a>
+                                </li>
+                            )) }
+                        </ul>
+                    </motion.div>
+            )}
+        </AnimatePresence>
 
         <div
             className='hidden lg:flex text-2xl tracking-widest flex-row justify-between items-center'

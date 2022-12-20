@@ -9,7 +9,7 @@ type Props = {
 const About = (props: Props) => {
   return (
     <div
-        className='flex flex-col items-center justify-between h-[100%]'
+        className='flex flex-col items-center justify-between h-[100%] mx-auto'
     >
         <SectionHeader
             title='About me'
