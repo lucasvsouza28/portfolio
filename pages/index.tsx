@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import { Fade } from "react-awesome-reveal";
 import Head from 'next/head'
 import About from '../components/About';
 import Experiencies from '../components/Experiencies';
@@ -17,13 +18,15 @@ const HomeSection = ({
   ...props
 }: PropsWithChildren<HomeSectionProps>) => {
   return (
-    <section
-      className={`h-screen px-5 snap-center mx-auto ${full ? 'w-full' : 'md:w-5/6 lg:w-4/6'}`}
-      id={id}
-      {...props}
-    >
-      {children}
-    </section>
+    <Fade>
+      <section
+        className={`h-screen px-5 snap-center mx-auto ${full ? 'w-full' : 'md:w-5/6 lg:w-4/6'}`}
+        id={id}
+        {...props}
+      >
+        {children}
+      </section>
+    </Fade>
   )
 };
 
