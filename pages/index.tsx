@@ -54,7 +54,7 @@ export default function Home({
     <main className='max-h-screen overflow-y-scroll
     snap snap-y snap-mandatory
     scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100
-    scroll-pt-5 md:scroll-pt-20 
+    scroll-pt-5 md:scroll-pt-5
     pt-10
     '>
       <Head>
