@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { TechsSection } from '../../@types'
 import SectionHeader from '../SectionHeader'
 
-type Props = {}
+type Props = TechsSection & {}
 
 const Techs = ({
+    title,
 }: Props) => {
     const [componentes, setComponentes] = useState<any[]>()
 
@@ -42,7 +44,7 @@ const Techs = ({
         className=''
     >
         <SectionHeader
-            title='Techs'
+            title={title}
         />
 
         <p

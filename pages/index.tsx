@@ -1,8 +1,8 @@
-import { Fragment, PropsWithChildren, ReactNode, useEffect } from 'react';
+import { Fragment, PropsWithChildren, ReactNode} from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
-import { UserRepo } from '../@types';
+import { HomePageInfo } from '../@types';
 import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
@@ -10,10 +10,11 @@ import SectionHeader from '../components/SectionHeader';
 import Projects from '../components/Projects';
 import { useIntersectionStore } from '../stores/navbar';
 import { InView } from 'react-intersection-observer';
+import { getHomePageInfo } from '../usecases/getHomePageInfo';
 
 type HomeSectionProps = {
-  id: string,
-  full?: boolean,
+  id: string;
+  full?: boolean;
 }
 
 const HomeSection = ({
@@ -40,14 +41,17 @@ const HomeSection = ({
 };
 
 export default function Home({
-  repos,
-}: HomeProps) {  
+  about,
+  experiencies,
+  techs,
+  contact,
+}: HomePageInfo) {  
   const sections: { component: ReactNode }[] = [
-    { component: <HomeSection id="about"><About /></HomeSection> },
-    { component: <HomeSection id="xp" full><Experiencies /></HomeSection> },
-    { component: <HomeSection id="techs"><Techs /></HomeSection> },
-    { component: <HomeSection id="projects" full><Projects repos={repos} /></HomeSection> },
-    { component: <HomeSection id="contact"><SectionHeader title='Contact' /></HomeSection> },
+    { component: <HomeSection id="about"><About {...about} /></HomeSection> },
+    { component: <HomeSection id="xp" full><Experiencies {...experiencies} /></HomeSection> },
+    { component: <HomeSection id="techs"><Techs {...techs} /></HomeSection> },
+    // { component: <HomeSection id="projects" full><Projects repos={[]} /></HomeSection> },
+    { component: <HomeSection id="contact"><SectionHeader {...contact} /></HomeSection> },
   ];
 
   return (
@@ -73,17 +77,10 @@ export default function Home({
   )
 }
 
-type HomeProps = {
-  repos: UserRepo[],
-}
-
-export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  // const repos = await getRepositories();
-  const repos: UserRepo[] = [];
+export const getServerSideProps: GetServerSideProps<HomePageInfo> = async () => {
+  const pageInfo = await getHomePageInfo();
 
   return {
-    props: {
-      repos,
-    }
+    props: pageInfo
   }
 }

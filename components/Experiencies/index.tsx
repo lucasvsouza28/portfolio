@@ -1,21 +1,16 @@
-import React from 'react'
+import { ExperienciesSection } from '../../@types';
 import SectionHeader from '../SectionHeader'
 
-type Props = {}
+type Props = ExperienciesSection & {}
 
 const Experiencies = ({
+    title,
+    experiencies,
 }: Props) => {
-    const experiencies = [
-        { logo: 'https://cataas.com/cat', at: 'XP', start: '08/2021', end: null, techs: [{ url: '' },{ url: '' },{ url: '' }] },
-        { logo: 'https://cataas.com/cat', at: 'I4', start: '12/2019', end: '07/2021', techs: [{ url: '' },{ url: '' },{ url: '' }] },
-        { logo: 'https://cataas.com/cat', at: 'Qualicorp', start: '06/2017', end: '12/2019', techs: [{ url: '' },{ url: '' },{ url: '' }] },
-        { logo: 'https://cataas.com/cat', at: 'MG', start: '01/2015', end: '07/2017', techs: [{ url: '' },{ url: '' },{ url: '' }] }
-    ];
-
     return (
         <>
             <SectionHeader
-                title='Experiencies'
+                title={title}
             />
 
             <div
@@ -37,7 +32,7 @@ const Experiencies = ({
                         <img
                             src={item.logo}
                             alt={item.at}
-                            className='h-32 w-32 mx-auto'
+                            className='h-32 w-32 mx-auto rounded-md object-contain'
                         />
                         <h2
                             className='experience-card__at
@@ -64,7 +59,7 @@ const Experiencies = ({
                             ))}
                         </div>
                         <p className='text-justify p-5 mt-10 md:text-2xl'>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste distinctio quibusdam doloremque facere voluptates, aperiam reprehenderit harum eaque sed maiores illum soluta fuga, mollitia sequi labore? Illum maxime atque voluptatum.
+                            {item.description}
                         </p>
                     </article>
                 ))}
