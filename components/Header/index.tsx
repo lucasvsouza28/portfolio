@@ -9,11 +9,11 @@ const Header = ({}: Props) => {
     const [isMenuOpen, setIsMenuOpen] = useCycle(false, true)
     const buttonRef = useRef(null);
     const links = [
-        { title: 'About me', link: '#about' },
-        { title: 'Experience', link: '#xp' },
-        { title: 'Technologies', link: '#techs' },
-        { title: 'Skills', link: '#skills' },
-        { title: 'Contact', link: '#contact' },
+        { title: '#AboutMe', link: '#about' },
+        { title: '#Experiencies', link: '#xp' },
+        { title: '#Technologies', link: '#techs' },
+        { title: '#Projects', link: '#projects' },
+        { title: '#Contact', link: '#contact' },
     ]
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const Header = ({}: Props) => {
     }, [buttonRef, isMenuOpen, setIsMenuOpen])
 
   return (
-    <header className='px-5 py-2 sticky z-50'>
+    <header className='px-5 py-2 fixed z-50 w-full'>
         <button
             ref={buttonRef}
             onClick={() => setIsMenuOpen()}
@@ -47,7 +47,7 @@ const Header = ({}: Props) => {
             {isMenuOpen && (
                     <motion.div
                         className='h-screen absolute p-4 bg-slate-100 top-0
-                        w-3/5 sm:w-2/5
+                        w-[60vw] sm:[30vw] lg:[20vw]
                         text-black
                         lg:hideen
                         '
@@ -79,7 +79,7 @@ const Header = ({}: Props) => {
                                         href={item.link}
                                         className='w-full'
                                     >
-                                        <span className='font-bold'>#</span> {item.title}
+                                        {item.title}
                                     </a>
                                 </li>
                             )) }
