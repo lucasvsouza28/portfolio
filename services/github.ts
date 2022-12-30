@@ -1,3 +1,5 @@
+import { UserRepo } from "../@types";
+
 const getRepositories = async () => {
     const response = await fetch("https://api.github.com/users/lucasvsouza28/repos")
 
