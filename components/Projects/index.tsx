@@ -20,7 +20,7 @@ const Projects = ({
             title='Projects'
         />
 
-        <div
+        {/* <div
           className='grid grid-rows-3 grid-flow-col gap-2
           overflow-x-scroll
           scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100
@@ -43,7 +43,7 @@ const Projects = ({
               </p>
             </div>
           ))}
-        </div>        
+        </div> */}
     </>
   )
 }

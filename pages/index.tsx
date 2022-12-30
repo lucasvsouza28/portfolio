@@ -1,4 +1,4 @@
-import { Fragment, PropsWithChildren, ReactNode } from 'react';
+import { Fragment, PropsWithChildren, ReactNode, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
@@ -8,7 +8,8 @@ import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
 import SectionHeader from '../components/SectionHeader';
 import Projects from '../components/Projects';
-import getRepositories from '../services/github';
+import { useIntersectionStore } from '../stores/navbar';
+import { InView } from 'react-intersection-observer';
 
 type HomeSectionProps = {
   id: string,
@@ -20,14 +21,20 @@ const HomeSection = ({
   children,
   full = false,
 }: PropsWithChildren<HomeSectionProps>) => {
+  const [setCurrentElementId] = useIntersectionStore(state => [state.setCurrentElementId])
+
   return (
     <Fade>
-      <section
+      <InView as="section"
         className={`h-screen px-5 snap-center mx-auto ${full ? 'w-full' : 'md:w-5/6 lg:w-4/6'}`}
         id={id}
+        threshold={0.8}
+        onChange={(inView) => {
+          if (inView) setCurrentElementId(`#${id}`)
+        }}
       >
         {children}
-      </section>
+      </InView>
     </Fade>
   )
 };
@@ -47,7 +54,7 @@ export default function Home({
     <main className='max-h-screen overflow-y-scroll
     snap snap-y snap-mandatory
     scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100
-    scroll-pt-5 md:scroll-pt-20 
+    scroll-pt-5 md:scroll-pt-5
     pt-10
     '>
       <Head>

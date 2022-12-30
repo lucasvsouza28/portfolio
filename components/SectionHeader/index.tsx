@@ -9,7 +9,8 @@ const SectionHeader = ({
 }: Props) => {
   return (
     <h2
-        className='text-2xl uppercase mx-auto text-center tracking-widest'
+        className='visible lg:invisible
+        text-2xl uppercase mx-auto text-center tracking-widest'
     >
         {title}
     </h2>
