@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, useCycle, AnimatePresence } from 'framer-motion'
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { useIntersectionStore } from '../../stores/navbar'
 
 type Props = {}
 
@@ -16,6 +17,8 @@ const Header = ({}: Props) => {
         { title: '#Contact', link: '#contact' },
     ]
 
+    const currentElementId = useIntersectionStore(state => state.currentElementId)
+
     useEffect(() => {
         const fn = (event: globalThis.MouseEvent) => {
             // @ts-ignore
@@ -29,6 +32,10 @@ const Header = ({}: Props) => {
             document.removeEventListener('click', fn);
         }
     }, [buttonRef, isMenuOpen, setIsMenuOpen])
+
+    useEffect(() => {
+        console.log('currentElementId changed', currentElementId)
+    }, [currentElementId])    
 
   return (
     <header className='px-5 py-2 fixed z-50 w-full'>
@@ -73,7 +80,7 @@ const Header = ({}: Props) => {
                             { links.map((item, i) => (
                                 <li
                                     key={i}
-                                    className="p-2 hover:border-b hover:border-b-[#CCC]"
+                                    className={`p-2 hover:border-b hover:border-b-[#CCC] ${currentElementId === item.link ? 'border-b border-b-[#CCC]' : ''}`}
                                 >
                                     <a
                                         href={item.link}
@@ -109,9 +116,10 @@ const Header = ({}: Props) => {
                         >
                             <Link
                                 href={item.link}
-                                className='w-full
+                                className={`w-full
                                 relative
-                                hover:before:absolute hover:before:bottom-0 hover:before:w-full hover:before:h-1 hover:before:bg-slate-200'
+                                hover:before:absolute hover:before:bottom-0 hover:before:w-full hover:before:h-1 hover:before:bg-slate-200
+                                ${currentElementId === item.link ? 'border-b border-b-[#CCC]' : ''}`}
                             >
                                 {item.title}
                             </Link>
