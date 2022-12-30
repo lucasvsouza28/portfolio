@@ -71,7 +71,8 @@ type HomeProps = {
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const repos = await getRepositories();
+  // const repos = await getRepositories();
+  const repos: UserRepo[] = [];
 
   return {
     props: {
