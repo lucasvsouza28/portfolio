@@ -33,10 +33,6 @@ const Header = ({}: Props) => {
         }
     }, [buttonRef, isMenuOpen, setIsMenuOpen])
 
-    useEffect(() => {
-        console.log('currentElementId changed', currentElementId)
-    }, [currentElementId])    
-
   return (
     <header className='px-5 py-2 fixed z-50 w-full'>
         <button
