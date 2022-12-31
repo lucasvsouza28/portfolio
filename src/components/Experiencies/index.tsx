@@ -1,5 +1,6 @@
 import { ExperienciesSection } from '../../@types';
 import SectionHeader from '../SectionHeader'
+import getSanityImageUrl from '../../helpers/getSanityImageUrl'
 
 type Props = ExperienciesSection & {}
 
@@ -19,7 +20,7 @@ const Experiencies = ({
                 scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100
                 snap snap-mandatory snap-x
             '>
-                {experiencies.map((item, i) => (
+                {experiencies?.map((item, i) => (
                     <article
                         key={i}
                         className="flex-1
@@ -30,7 +31,7 @@ const Experiencies = ({
                         before:absolute before:rounded-lg before:-z-10 before:backdrop-blur-[5px] before:w-full before:h-full before:inset-0 before:border before:border-white/10 before:bg-white/10"
                     >
                         <img
-                            src={item.logo}
+                            src={getSanityImageUrl(item.logo)}
                             alt={item.at}
                             className='h-32 w-32 mx-auto rounded-md object-contain'
                         />
@@ -53,7 +54,7 @@ const Experiencies = ({
                             {item.techs.map((tech, j) => (
                                 <img
                                     key={j}
-                                    src={item.logo}
+                                    src={getSanityImageUrl(tech)}
                                     className='w-8 h-8 rounded-full'
                                 />
                             ))}

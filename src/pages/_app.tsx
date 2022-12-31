@@ -1,5 +1,7 @@
 import type { AppProps } from 'next/app'
 import Header from '../components/Header'
+import { ApolloProvider } from '@apollo/client'
+import apolloClient from '../factories/apollo'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -10,7 +12,9 @@ export default function App({ Component, pageProps }: AppProps) {
         className="object-cover fixed inset-0 h-screen w-screen -z-10"
       />
       <Header />
-      <Component {...pageProps} />
+      <ApolloProvider client={apolloClient}>
+        <Component {...pageProps} />
+      </ApolloProvider>
     </>
   )
 }

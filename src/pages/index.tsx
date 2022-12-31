@@ -1,4 +1,4 @@
-import { Fragment, PropsWithChildren, ReactNode} from 'react';
+import { Fragment, PropsWithChildren, ReactNode, useEffect} from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
@@ -7,7 +7,6 @@ import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
 import SectionHeader from '../components/SectionHeader';
-import Projects from '../components/Projects';
 import { useIntersectionStore } from '../stores/navbar';
 import { InView } from 'react-intersection-observer';
 import { getHomePageInfo } from '../usecases/getHomePageInfo';
@@ -42,15 +41,14 @@ const HomeSection = ({
 
 export default function Home({
   about,
-  experiencies,
-  techs,
-  contact,
+ experiencies,
+ techs,
+ contact, 
 }: HomePageInfo) {  
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
     { component: <HomeSection id="xp" full><Experiencies {...experiencies} /></HomeSection> },
     { component: <HomeSection id="techs"><Techs {...techs} /></HomeSection> },
-    // { component: <HomeSection id="projects" full><Projects repos={[]} /></HomeSection> },
     { component: <HomeSection id="contact"><SectionHeader {...contact} /></HomeSection> },
   ];
 
@@ -78,9 +76,9 @@ export default function Home({
 }
 
 export const getServerSideProps: GetServerSideProps<HomePageInfo> = async () => {
-  const pageInfo = await getHomePageInfo();
-
+  const homePageInfo = await getHomePageInfo();
+  
   return {
-    props: pageInfo
+    props: homePageInfo
   }
 }
