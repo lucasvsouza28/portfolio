@@ -7,10 +7,6 @@ export const getHomePageInfo = async () => {
         query: getHomePageInfoQuery,
     });
 
-    if (response.data.allHomePageInfo.length) {
-
-        return response.data.allHomePageInfo[0]
-    };
     
-    return null;
+    return response.data.allHomePageInfo[0];
 };

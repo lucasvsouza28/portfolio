@@ -45,7 +45,7 @@ export default function Home({
  experiencies,
  techs,
  contact, 
-}: HomePageInfo) {  
+}: HomePageInfo) {
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
     { component: <HomeSection id="xp" full><Experiencies {...experiencies} /></HomeSection> },
@@ -81,7 +81,9 @@ export const getStaticProps: GetStaticProps<HomePageInfo> = async () => {
   const homePageInfo = await getHomePageInfo();
   
   return {
-    props: homePageInfo,
+    props: {
+      ...homePageInfo,
+    },
     // revalidate: ONE_DAY_IN_MILLISECONDS,
   }
 }
