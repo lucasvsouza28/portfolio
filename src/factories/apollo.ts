@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'https://el57xt1k.api.sanity.io/v1/graphql/production/default',
+    uri: process.env.SANITY_GQL_ENDPOINT,
     cache: new InMemoryCache(),
 });
 

@@ -1,5 +1,5 @@
 import { Fragment, PropsWithChildren, ReactNode, useEffect} from 'react';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
 import { HomePageInfo } from '../@types';
@@ -10,6 +10,7 @@ import SectionHeader from '../components/SectionHeader';
 import { useIntersectionStore } from '../stores/navbar';
 import { InView } from 'react-intersection-observer';
 import { getHomePageInfo } from '../usecases/getHomePageInfo';
+const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 
 type HomeSectionProps = {
   id: string;
@@ -75,10 +76,12 @@ export default function Home({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<HomePageInfo> = async () => {
+
+export const getStaticProps: GetStaticProps<HomePageInfo> = async () => {
   const homePageInfo = await getHomePageInfo();
   
   return {
-    props: homePageInfo
+    props: homePageInfo,
+    // revalidate: ONE_DAY_IN_MILLISECONDS,
   }
 }
