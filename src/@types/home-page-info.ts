@@ -25,7 +25,9 @@ export type ExperienciesSection = WithTitle & {
   }[],
 }
 
-export type TechsSection = WithTitle & {}
+export type TechsSection = WithTitle & {
+  techs: SanityImage[]
+}
 
 export type ContactSection = WithTitle & {}
 
@@ -34,7 +36,7 @@ export type HomePageInfo = {
   owner: string;
   about: AboutSection;
   experiencies: ExperienciesSection;
-  techs: TechsSection;
+  technologies: TechsSection;
   contact: ContactSection;
 }
 

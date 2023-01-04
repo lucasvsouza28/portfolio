@@ -33,6 +33,14 @@ const getHomePageInfoQuery = gql`
             }
           }
         }
+      },
+      technologies {
+        title,
+        techs {
+          asset {
+            url
+          }
+        }
       }
     }
   }

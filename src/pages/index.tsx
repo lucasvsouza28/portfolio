@@ -43,14 +43,14 @@ const HomeSection = ({
 export default function Home({
   about,
   experiencies,
-  techs,
+  technologies,
   contact,
   owner,
 }: HomePageInfo) {
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
     { component: <HomeSection id="xp" full><Experiencies {...experiencies} /></HomeSection> },
-    { component: <HomeSection id="techs"><Techs {...techs} /></HomeSection> },
+    { component: <HomeSection id="techs"><Techs {...technologies} /></HomeSection> },
     { component: <HomeSection id="contact"><SectionHeader {...contact} /></HomeSection> },
   ];
 
