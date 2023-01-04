@@ -16,7 +16,7 @@ const Experiencies = ({
 
             <div
                 className='flex flex-shrink-0 flex-nowrap space-x-2
-                h-[80vh] overflow-x-auto mt-5 pb-5
+                h-[85vh] overflow-x-auto pt-10 pb-5
                 scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100
                 snap snap-mandatory snap-x
             '>
@@ -45,11 +45,12 @@ const Experiencies = ({
                             className='experince-card__dates
                             w-full text-center font-semibold'
                         >
-                            {item.start} - {item.end || 'now'}
+                            {item.start.substring(0, 7)} / {item.end?.substring(0, 7) || 'now'}
                         </div>
                         <div
                             className='experince-card__techs
-                            flex space-x-2 items-center justify-center mt-2'
+                            flex space-x-2 items-center justify-center flex-wrap gap-y-2
+                            mt-2'
                         >
                             {item.techs.map((tech, j) => (
                                 <img
@@ -59,7 +60,7 @@ const Experiencies = ({
                                 />
                             ))}
                         </div>
-                        <p className='text-justify p-5 mt-10 md:text-2xl'>
+                        <p className='text-justify p-5 md:mt-10 md:text-2xl'>
                             {item.description}
                         </p>
                     </article>

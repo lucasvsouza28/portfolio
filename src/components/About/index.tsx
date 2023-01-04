@@ -13,15 +13,13 @@ const About = ({
 }: AboutSection) => {
   return (
     <div
-        className='flex flex-col items-center justify-between h-[100%] mx-auto'
+        className='flex flex-col items-center justify-between h-[100%] mx-auto gap-y-10'
     >
         <SectionHeader
             title={title}
         />
         <div
-            className='flex flex-col flex-1 items-center space-y-8 lg:flex-row lg:w-3/4 md:space-x-8
-            mt-5
-            '
+            className='flex flex-col flex-1 items-center space-y-8 lg:flex-row lg:w-3/4 md:space-x-8'
         >
             <div
                 className='flex flex-col gap-4 flex-shrink-0'

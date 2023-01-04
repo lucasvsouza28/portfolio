@@ -42,9 +42,10 @@ const HomeSection = ({
 
 export default function Home({
   about,
- experiencies,
- techs,
- contact, 
+  experiencies,
+  techs,
+  contact,
+  owner,
 }: HomePageInfo) {
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
@@ -61,8 +62,8 @@ export default function Home({
     pt-10
     '>
       <Head>
-        <title>Portfolio</title>
-        <meta name="description" content="My portfolio | Home" />
+        <title>{`${owner} Portfolio | Home`}</title>
+        <meta name="description" content={`${owner} Portfolio | Home`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {sections.map((section, i) => (
@@ -81,9 +82,7 @@ export const getStaticProps: GetStaticProps<HomePageInfo> = async () => {
   const homePageInfo = await getHomePageInfo();
   
   return {
-    props: {
-      ...homePageInfo,
-    },
-    // revalidate: ONE_DAY_IN_MILLISECONDS,
+    props: homePageInfo,
+    revalidate: 1000 * 60 * 1,
   }
 }

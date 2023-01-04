@@ -48,7 +48,7 @@ const Techs = ({
         />
 
         <p
-            className='my-5 md:text-2xl mx-auto w-full text-center'
+            className='pt-10 md:text-2xl mx-auto w-full text-center'
         >
             Here&apos;s an overview of tools/technologies im used to (full list ommited for brevitty)
         </p>
