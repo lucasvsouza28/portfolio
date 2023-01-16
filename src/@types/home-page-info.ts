@@ -49,7 +49,7 @@ export type ContactSection = WithTitleTranslation & {
   submit_button: WithTranslation;
 }
 
-export type HomePageInfo = {
+export type HomePageInfo = WithTitleTranslation & {
   _id: string;
   owner: string;
   about: AboutSection;

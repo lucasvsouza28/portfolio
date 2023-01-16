@@ -1,14 +1,24 @@
-import Link from 'next/link'
-import { useEffect, useRef } from 'react'
-import { motion, useCycle, AnimatePresence } from 'framer-motion'
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { useIntersectionStore } from '../../stores/navbar'
+import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { motion, useCycle, AnimatePresence } from 'framer-motion';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { useIntersectionStore } from '../../stores/navbar';
+import { useLocaleStore } from '../../stores/locale';
+import { useTitleStore } from '../../stores/title';
+import getPropByLocale from '../../helpers/getPropByLocale';
+import Image from 'next/image';
+import brasil from '../../assets/brasil.jpg'
+import unitedStates from '../../assets/united_states.webp'
 
 type Props = {}
 
-const Header = ({}: Props) => {
+const Header = ({
+}: Props) => {
     const [isMenuOpen, setIsMenuOpen] = useCycle(false, true)
     const buttonRef = useRef(null);
+    const [locale] = useLocaleStore(state => [state.locale]);
+    const [title] = useTitleStore(state => [state.title])
+    
     const links = [
         { title: '#AboutMe', link: '#about' },
         { title: '#Experiencies', link: '#xp' },
@@ -71,7 +81,9 @@ const Header = ({}: Props) => {
                             Portfolio
                         </h1>
 
-                        <ul className='mt-4 flex flex-col space-y-2'>
+                        <ul className='flex flex-col space-y-2
+                        my-4
+                        '>
                             { links.map((item, i) => (
                                 <li
                                     key={i}
@@ -86,6 +98,30 @@ const Header = ({}: Props) => {
                                 </li>
                             )) }
                         </ul>
+                        <div
+                            className='flex gap-x-2 ml-4'
+                        >
+                            <Link
+                                href="pt-BR"
+                            >
+                                <Image
+                                    src={brasil}
+                                    alt="Visualizar site em portugês"
+                                    height={32}
+                                    width={32}
+                                />
+                            </Link>
+                            <Link
+                                href="en"
+                            >
+                                <Image
+                                    src={unitedStates}
+                                    alt="View site in english"
+                                    height={32}
+                                    width={32}
+                                />
+                            </Link>
+                        </div>
                     </motion.div>
             )}
         </AnimatePresence>
@@ -94,10 +130,10 @@ const Header = ({}: Props) => {
             className='hidden lg:flex text-2xl tracking-widest flex-row justify-between items-center'
         >
             <div>
-                My Portfolio
+                {getPropByLocale(title, locale)}
             </div>
             <div
-                className=''
+                className='flex justify-end items-center'
             >
                 <ul className='flex flex-row space-x-2 items-center justify-center text-center'>
                     { links.map((item, i) => (
@@ -121,6 +157,30 @@ const Header = ({}: Props) => {
                         </li>
                     )) }
                 </ul>
+                <div
+                    className='flex gap-x-2 ml-4'
+                >
+                    <Link
+                        href="pt-BR"
+                    >
+                        <Image
+                            src={brasil}
+                            alt="Visualizar site em portugês"
+                            height={32}
+                            width={32}
+                        />
+                    </Link>
+                    <Link
+                        href="en"
+                    >
+                        <Image
+                            src={unitedStates}
+                            alt="View site in english"
+                            height={32}
+                            width={32}
+                        />
+                    </Link>
+                </div>
             </div>
         </div>
     </header>

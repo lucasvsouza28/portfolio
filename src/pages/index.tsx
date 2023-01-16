@@ -3,15 +3,16 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
 import { ToastContainer } from 'react-toastify';
+import { InView } from 'react-intersection-observer';
 import { HomePageInfo, WithLocale } from '../@types';
 import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
-import { useIntersectionStore } from '../stores/navbar';
-import { InView } from 'react-intersection-observer';
-import { getHomePageInfo } from '../usecases/getHomePageInfo';
 import Contact from '../components/Contact';
-import { useLocaleStore } from '../stores/locale'
+import { getHomePageInfo } from '../usecases/getHomePageInfo';
+import { useIntersectionStore } from '../stores/navbar';
+import { useLocaleStore } from '../stores/locale';
+import { useTitleStore } from '../stores/title';
 import 'react-toastify/dist/ReactToastify.css';
 const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 
@@ -49,9 +50,11 @@ export default function Home({
   technologies,
   contact,
   owner,
+  title,
   locale,
 }: HomePageInfo & WithLocale) {
   const [setLocale] = useLocaleStore(state => [state.setLocale]);
+  const [setTitle] = useTitleStore(state => [state.setTitle])
   
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
@@ -61,8 +64,14 @@ export default function Home({
   ];
   
   useEffect(() => {
-    setLocale(locale);    
-  }, [setLocale, locale]);
+    setLocale(locale);
+    setTitle(title);
+  }, [
+    setLocale,
+    locale,
+    setTitle,
+    title,
+  ]);
 
   return (
     <main className='max-h-screen overflow-y-scroll
