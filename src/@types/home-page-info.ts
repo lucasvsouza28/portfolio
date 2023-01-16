@@ -1,5 +1,18 @@
+export type WithLocale = {
+  locale: 'pt-BR' | 'en';
+}
+
+export type WithTranslation = {
+  ptBR?: string;
+  en?: string;
+}
+
 export type WithTitle = {
   title: string;
+}
+
+export type WithTitleTranslation = {
+  title: WithTranslation;
 }
 
 export type SanityImage = {
@@ -8,28 +21,33 @@ export type SanityImage = {
   }
 }
 
-export type AboutSection = WithTitle & {
+export type AboutSection = WithTitleTranslation & {
   image: SanityImage;
-  intro: string;
+  intro: WithTranslation;
   socialNetworks: string[];
 }
 
-export type ExperienciesSection = WithTitle & {
+export type ExperienciesSection = WithTitleTranslation & {
   experiencies: {
     logo: SanityImage;
     at: string;
     start: string;
     end?: string;
-    description: string;
+    description: WithTranslation;
     techs: SanityImage[];
   }[],
 }
 
-export type TechsSection = WithTitle & {
+export type TechsSection = WithTitleTranslation & {
   techs: SanityImage[]
 }
 
-export type ContactSection = WithTitle & {}
+export type ContactSection = WithTitleTranslation & {
+  name_placeholder: WithTranslation;
+  message_placeholder: WithTranslation;
+  cancel_button: WithTranslation;
+  submit_button: WithTranslation;
+}
 
 export type HomePageInfo = {
   _id: string;

@@ -6,17 +6,26 @@ const getHomePageInfoQuery = gql`
       _id,
       owner,
       about {
-          title,
+        title {
+          ptBR,
+          en
+        },
         image {
           asset {
             url
           }
         },
-        intro,
+        intro {
+          ptBR,
+          en
+        },
         socialNetworks
       },
       experiencies {
-        title,
+        title{
+          ptBR,
+          en
+        },
         experiencies {
           at,
           logo {
@@ -26,7 +35,10 @@ const getHomePageInfoQuery = gql`
           },
           start,
           end,
-          description,
+          description{
+            ptBR,
+            en
+          },
           techs {
             asset {
               url
@@ -35,11 +47,36 @@ const getHomePageInfoQuery = gql`
         }
       },
       technologies {
-        title,
+        title{
+          ptBR,
+          en
+        },
         techs {
           asset {
             url
           }
+        }
+      },
+      contact {
+        title {
+          ptBR,
+          en
+        },
+        name_placeholder {
+          ptBR,
+          en
+        },
+        message_placeholder {
+          ptBR,
+          en
+        },
+        cancel_button {
+          ptBR,
+          en
+        },
+        submit_button {
+          ptBR,
+          en
         }
       }
     }

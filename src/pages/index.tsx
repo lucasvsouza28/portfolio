@@ -2,14 +2,17 @@ import { Fragment, PropsWithChildren, ReactNode, useEffect} from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
-import { HomePageInfo } from '../@types';
+import { ToastContainer } from 'react-toastify';
+import { HomePageInfo, WithLocale } from '../@types';
 import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
-import SectionHeader from '../components/SectionHeader';
 import { useIntersectionStore } from '../stores/navbar';
 import { InView } from 'react-intersection-observer';
 import { getHomePageInfo } from '../usecases/getHomePageInfo';
+import Contact from '../components/Contact';
+import { useLocaleStore } from '../stores/locale'
+import 'react-toastify/dist/ReactToastify.css';
 const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 
 type HomeSectionProps = {
@@ -46,13 +49,20 @@ export default function Home({
   technologies,
   contact,
   owner,
-}: HomePageInfo) {
+  locale,
+}: HomePageInfo & WithLocale) {
+  const [setLocale] = useLocaleStore(state => [state.setLocale]);
+  
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
     { component: <HomeSection id="xp" full><Experiencies {...experiencies} /></HomeSection> },
     { component: <HomeSection id="techs"><Techs {...technologies} /></HomeSection> },
-    { component: <HomeSection id="contact"><SectionHeader {...contact} /></HomeSection> },
+    { component: <HomeSection id="contact"><Contact {...contact} /></HomeSection> },
   ];
+  
+  useEffect(() => {
+    setLocale(locale);    
+  }, [setLocale, locale]);
 
   return (
     <main className='max-h-screen overflow-y-scroll
@@ -73,16 +83,32 @@ export default function Home({
           {section?.component}
         </Fragment>
       ))}
+      <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+      />
     </main>
   )
 }
 
 
-export const getStaticProps: GetStaticProps<HomePageInfo> = async () => {
+export const getStaticProps: GetStaticProps<HomePageInfo & WithLocale> = async (context) => {
+  const locale = (context.locale ?? 'pt-BR') as 'pt-BR' | 'en';
   const homePageInfo = await getHomePageInfo();
   
   return {
-    props: homePageInfo,
-    revalidate: 1000 * 60 * 1,
+    props: {
+      ...homePageInfo,
+      locale,
+    },
+    revalidate: ONE_DAY_IN_MILLISECONDS,
   }
 }

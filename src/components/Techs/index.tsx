@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { TechsSection } from '../../@types';
 import getSanityImageUrl from '../../helpers/getSanityImageUrl';
 import SectionHeader from '../SectionHeader';
+import { useLocaleStore } from '../../stores/locale';
+import getPropByLocale from '../../helpers/getPropByLocale';
 
 type Props = TechsSection & {}
 
@@ -9,12 +11,14 @@ const Techs = ({
     title,
     techs,
 }: Props) => {
+    const [locale] = useLocaleStore(state => [state.locale]);
+    
   return (
     <div
         className=''
     >
         <SectionHeader
-            title={title}
+            title={getPropByLocale(title, locale)}
         />
 
         <div
