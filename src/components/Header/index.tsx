@@ -13,7 +13,6 @@ const Header = ({}: Props) => {
         { title: '#AboutMe', link: '#about' },
         { title: '#Experiencies', link: '#xp' },
         { title: '#Technologies', link: '#techs' },
-        { title: '#Projects', link: '#projects' },
         { title: '#Contact', link: '#contact' },
     ]
 

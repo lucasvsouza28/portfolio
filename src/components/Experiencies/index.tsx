@@ -28,7 +28,10 @@ const Experiencies = ({
                         h-full min-w-[300px] md:min-w-[450px]
                         pt-10 px-5
                         relative
-                        before:absolute before:rounded-lg before:-z-10 before:backdrop-blur-[5px] before:w-full before:h-full before:inset-0 before:border before:border-white/10 before:bg-white/10"
+                        before:absolute before:rounded-lg before:-z-10
+                        before:bg-glass
+                        before:w-full before:h-full before:inset-0
+                        before:border before:border-white/10"
                     >
                         <img
                             src={getSanityImageUrl(item.logo)}

@@ -7,3 +7,9 @@ body {
     color: #FFF;
     overflow-y: hidden;
 }
+
+@layer components {
+    .bg-glass {
+        @apply backdrop-filter backdrop-blur-[20px] bg-white/10;
+    }
+}
