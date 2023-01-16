@@ -1,9 +1,11 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import SectionHeader from '../SectionHeader'
-import { SocialIcon } from 'react-social-icons'
-import { AboutSection } from '../../@types'
-import getSanityImageUrl from '../../helpers/getSanityImageUrl'
+import React from 'react';
+import { motion } from 'framer-motion';
+import SectionHeader from '../SectionHeader';
+import { SocialIcon } from 'react-social-icons';
+import { AboutSection } from '../../@types';
+import getSanityImageUrl from '../../helpers/getSanityImageUrl';
+import { useLocaleStore } from '../../stores/locale';
+import getPropByLocale from '../../helpers/getPropByLocale';
 
 const About = ({
     title,
@@ -11,12 +13,14 @@ const About = ({
     intro,
     socialNetworks,
 }: AboutSection) => {
+    const [locale] = useLocaleStore(state => [state.locale]);
+
   return (
     <div
         className='flex flex-col items-center justify-between h-[100%] mx-auto gap-y-10'
     >
         <SectionHeader
-            title={title}
+            title={getPropByLocale(title, locale)}
         />
         <div
             className='flex flex-col flex-1 items-center space-y-8 lg:flex-row lg:w-3/4 md:space-x-8'
@@ -68,7 +72,7 @@ const About = ({
                     duration: 1,
                 }}
             >
-                {intro}
+                {getPropByLocale(intro, locale)}
             </motion.p>
         </div>
     </div>

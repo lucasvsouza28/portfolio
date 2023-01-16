@@ -2,6 +2,8 @@ import React, { FormEvent, InputHTMLAttributes, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ContactSection } from '../../@types'
 import SectionHeader from '../SectionHeader'
+import { useLocaleStore } from '../../stores/locale'
+import getPropByLocale from '../../helpers/getPropByLocale';
 
 type ContactProps = ContactSection & {}
 
@@ -21,10 +23,15 @@ const ContactInput = (props: InputProps) => (
 
 const Contact = ({
     title,
+    name_placeholder,
+    message_placeholder,
+    cancel_button,
+    submit_button,
 }: ContactProps) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const [locale] = useLocaleStore(state => [state.locale]);
     
     const resetForm = () => {
         setName('');
@@ -58,7 +65,7 @@ const Contact = ({
 
     return (
         <div>
-            <SectionHeader title={title ?? 'contato (hc)'} />
+            <SectionHeader title={getPropByLocale(title, locale)} />
             <form                
                 onSubmit={handleSubmit}
                 className='mt-10
@@ -70,19 +77,19 @@ const Contact = ({
                     className='flex flex-col sm:flex-row justify-between gap-y-2 sm:gap-x-2'
                 >
                     <ContactInput
-                        placeholder='Nome'
+                        placeholder={getPropByLocale(name_placeholder, locale)}
                         value={name}
                         onChange={e => setName(e.target.value)}
                     />
                     <ContactInput
                         type='email'
-                        placeholder='E-mail'
+                        placeholder='Email'
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
                 </div>
                 <textarea
-                    placeholder='Mensagem'
+                    placeholder={getPropByLocale(message_placeholder, locale)}
                     value={message}
                     onChange={e => setMessage(e.target.value)}
                     className='w-full max-h-48
@@ -103,7 +110,7 @@ const Contact = ({
                         text-black font-semibold
                         rounded-sm p-2'
                     >
-                        Cancelar
+                        {getPropByLocale(cancel_button, locale)}
                     </button>
                     <button
                         type="submit"
@@ -112,7 +119,7 @@ const Contact = ({
                         rounded-sm p-2
                         '
                     >
-                        Enviar
+                        {getPropByLocale(submit_button, locale)}
                     </button>
                 </div>
             </form>

@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
 import { ToastContainer } from 'react-toastify';
-import { HomePageInfo } from '../@types';
+import { HomePageInfo, WithLocale } from '../@types';
 import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
@@ -11,6 +11,7 @@ import { useIntersectionStore } from '../stores/navbar';
 import { InView } from 'react-intersection-observer';
 import { getHomePageInfo } from '../usecases/getHomePageInfo';
 import Contact from '../components/Contact';
+import { useLocaleStore } from '../stores/locale'
 import 'react-toastify/dist/ReactToastify.css';
 const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 
@@ -48,13 +49,20 @@ export default function Home({
   technologies,
   contact,
   owner,
-}: HomePageInfo) {
+  locale,
+}: HomePageInfo & WithLocale) {
+  const [setLocale] = useLocaleStore(state => [state.setLocale]);
+  
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
     { component: <HomeSection id="xp" full><Experiencies {...experiencies} /></HomeSection> },
     { component: <HomeSection id="techs"><Techs {...technologies} /></HomeSection> },
     { component: <HomeSection id="contact"><Contact {...contact} /></HomeSection> },
   ];
+  
+  useEffect(() => {
+    setLocale(locale);    
+  }, [setLocale, locale]);
 
   return (
     <main className='max-h-screen overflow-y-scroll
@@ -92,11 +100,15 @@ export default function Home({
 }
 
 
-export const getStaticProps: GetStaticProps<HomePageInfo> = async () => {
+export const getStaticProps: GetStaticProps<HomePageInfo & WithLocale> = async (context) => {
+  const locale = context.locale;
   const homePageInfo = await getHomePageInfo();
   
   return {
-    props: homePageInfo,
-    revalidate: 1//1000 * 60 * 1,
+    props: {
+      ...homePageInfo,
+      locale,
+    },
+    revalidate: ONE_DAY_IN_MILLISECONDS,
   }
 }
