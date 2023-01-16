@@ -5,6 +5,10 @@ const getHomePageInfoQuery = gql`
     allHomePageInfo(where: { owner: { eq: "Lucas Souza"} }) {
       _id,
       owner,
+      title {
+        ptBR,
+        en
+      },
       about {
         title {
           ptBR,

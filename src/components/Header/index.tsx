@@ -1,14 +1,21 @@
-import Link from 'next/link'
-import { useEffect, useRef } from 'react'
-import { motion, useCycle, AnimatePresence } from 'framer-motion'
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { useIntersectionStore } from '../../stores/navbar'
+import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { motion, useCycle, AnimatePresence } from 'framer-motion';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { useIntersectionStore } from '../../stores/navbar';
+import { useLocaleStore } from '../../stores/locale';
+import { useTitleStore } from '../../stores/title';
+import getPropByLocale from '../../helpers/getPropByLocale';
 
 type Props = {}
 
-const Header = ({}: Props) => {
+const Header = ({
+}: Props) => {
     const [isMenuOpen, setIsMenuOpen] = useCycle(false, true)
     const buttonRef = useRef(null);
+    const [locale] = useLocaleStore(state => [state.locale]);
+    const [title] = useTitleStore(state => [state.title])
+    
     const links = [
         { title: '#AboutMe', link: '#about' },
         { title: '#Experiencies', link: '#xp' },
@@ -94,7 +101,7 @@ const Header = ({}: Props) => {
             className='hidden lg:flex text-2xl tracking-widest flex-row justify-between items-center'
         >
             <div>
-                My Portfolio
+                {getPropByLocale(title, locale)}
             </div>
             <div
                 className=''
