@@ -1,5 +1,5 @@
-import { Fragment, PropsWithChildren, ReactNode} from 'react';
-import { GetServerSideProps } from 'next';
+import { Fragment, PropsWithChildren, ReactNode, useEffect} from 'react';
+import { GetStaticProps } from 'next';
 import Head from 'next/head'
 import { Fade } from "react-awesome-reveal";
 import { HomePageInfo } from '../@types';
@@ -7,10 +7,10 @@ import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
 import SectionHeader from '../components/SectionHeader';
-import Projects from '../components/Projects';
 import { useIntersectionStore } from '../stores/navbar';
 import { InView } from 'react-intersection-observer';
 import { getHomePageInfo } from '../usecases/getHomePageInfo';
+const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 
 type HomeSectionProps = {
   id: string;
@@ -43,14 +43,14 @@ const HomeSection = ({
 export default function Home({
   about,
   experiencies,
-  techs,
+  technologies,
   contact,
-}: HomePageInfo) {  
+  owner,
+}: HomePageInfo) {
   const sections: { component: ReactNode }[] = [
     { component: <HomeSection id="about"><About {...about} /></HomeSection> },
     { component: <HomeSection id="xp" full><Experiencies {...experiencies} /></HomeSection> },
-    { component: <HomeSection id="techs"><Techs {...techs} /></HomeSection> },
-    // { component: <HomeSection id="projects" full><Projects repos={[]} /></HomeSection> },
+    { component: <HomeSection id="techs"><Techs {...technologies} /></HomeSection> },
     { component: <HomeSection id="contact"><SectionHeader {...contact} /></HomeSection> },
   ];
 
@@ -62,8 +62,8 @@ export default function Home({
     pt-10
     '>
       <Head>
-        <title>Portfolio</title>
-        <meta name="description" content="My portfolio | Home" />
+        <title>{`${owner} Portfolio | Home`}</title>
+        <meta name="description" content={`${owner} Portfolio | Home`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {sections.map((section, i) => (
@@ -77,10 +77,12 @@ export default function Home({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<HomePageInfo> = async () => {
-  const pageInfo = await getHomePageInfo();
 
+export const getStaticProps: GetStaticProps<HomePageInfo> = async () => {
+  const homePageInfo = await getHomePageInfo();
+  
   return {
-    props: pageInfo
+    props: homePageInfo,
+    revalidate: 1000 * 60 * 1,
   }
 }

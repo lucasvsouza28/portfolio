@@ -1,44 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { TechsSection } from '../../@types'
-import SectionHeader from '../SectionHeader'
+import Image from 'next/image';
+import { TechsSection } from '../../@types';
+import getSanityImageUrl from '../../helpers/getSanityImageUrl';
+import SectionHeader from '../SectionHeader';
 
 type Props = TechsSection & {}
 
 const Techs = ({
     title,
+    techs,
 }: Props) => {
-    const [componentes, setComponentes] = useState<any[]>()
-
-    useEffect(() => {
-        const techs = [
-            'csharp',
-            'dot-net',
-            'react',
-            'angularjs',
-            'vuejs',
-            'typescript',
-            'javascript',
-            'html5',
-            'css3',
-            'git',
-            'docker',
-            'nodejs',
-            'redis',
-            'mongodb',
-        ];
-
-        Promise
-        .all(techs.map(async (t) => {
-            try {
-                const m = await import(`react-devicons/${t}/original`);
-                return m.default;
-            } catch(err){}
-        }))
-        .then(comps => {
-            setComponentes(comps)
-        })
-    }, [])    
-
   return (
     <div
         className=''
@@ -47,22 +17,19 @@ const Techs = ({
             title={title}
         />
 
-        <p
-            className='my-5 md:text-2xl mx-auto w-full text-center'
-        >
-            Here&apos;s an overview of tools/technologies im used to (full list ommited for brevitty)
-        </p>
-
         <div
             className='mt-5 grid grid-cols-3 gap-y-5 place-items-center max-w-3xl mx-auto'
         >
-            {componentes?.map((Icon, i) => (
-                <Icon
+            {techs?.map((item, i) => (
+                <Image
                     key={i}
-                    size={42}
+                    src={getSanityImageUrl(item)}
+                    alt='technology logo'
+                    width={48}
+                    height={48}
+                    priority
                 />
             ))}
-            ...
         </div>
     </div>
   )
