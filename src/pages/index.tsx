@@ -101,7 +101,7 @@ export default function Home({
 
 
 export const getStaticProps: GetStaticProps<HomePageInfo & WithLocale> = async (context) => {
-  const locale = context.locale;
+  const locale = (context.locale ?? 'pt-BR') as 'pt-BR' | 'en';
   const homePageInfo = await getHomePageInfo();
   
   return {
