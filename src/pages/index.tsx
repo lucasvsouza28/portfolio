@@ -1,19 +1,31 @@
-import { Fragment, PropsWithChildren, ReactNode, useEffect} from 'react';
-import { GetStaticProps } from 'next';
 import Head from 'next/head'
-import { Fade } from "react-awesome-reveal";
+import { Fragment, PropsWithChildren, ReactNode, useEffect, useState} from 'react';
+import { GetStaticProps } from 'next';
 import { ToastContainer } from 'react-toastify';
 import { InView } from 'react-intersection-observer';
+
+// type
 import { HomePageInfo, WithLocale } from '../@types';
+
+// components
 import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
 import Contact from '../components/Contact';
+
+// usecases
 import { getHomePageInfo } from '../usecases/getHomePageInfo';
+
+// stores
 import { useIntersectionStore } from '../stores/navbar';
 import { useLocaleStore } from '../stores/locale';
 import { useTitleStore } from '../stores/title';
+
+// style
 import 'react-toastify/dist/ReactToastify.css';
+import { motion } from 'framer-motion';
+
+// constants
 const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
 
 type HomeSectionProps = {
@@ -26,21 +38,33 @@ const HomeSection = ({
   children,
   full = false,
 }: PropsWithChildren<HomeSectionProps>) => {
-  const [setCurrentElementId] = useIntersectionStore(state => [state.setCurrentElementId])
+  const [setCurrentElementId] = useIntersectionStore(state => [state.setCurrentElementId]);
+  const [inView, setinView] = useState(false);
 
   return (
-    <Fade>
+    <motion.div
+      initial='hidden'
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+      }}
+      animate={inView ? 'visible' : 'hidden'}
+      transition={{ duration: .7 }}
+      viewport={{ once: false }}
+      className="w-full h-full"
+    >
       <InView as="section"
         className={`h-screen px-5 snap-center mx-auto ${full ? 'w-full' : 'md:w-5/6 lg:w-4/6'}`}
         id={id}
         threshold={0.8}
-        onChange={(inView) => {
-          if (inView) setCurrentElementId(`#${id}`)
+        onChange={(_inView) => {
+          setinView(_inView)
+          if (_inView) setCurrentElementId(`#${id}`)
         }}
       >
         {children}
       </InView>
-    </Fade>
+    </motion.div>
   )
 };
 
