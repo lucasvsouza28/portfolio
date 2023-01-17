@@ -1,31 +1,19 @@
 import { Fragment, PropsWithChildren, ReactNode, useEffect} from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head'
-import { motion, useAnimation } from 'framer-motion';
+import { Fade } from "react-awesome-reveal";
 import { ToastContainer } from 'react-toastify';
-import { useInView } from 'react-intersection-observer';
-
-// types
+import { InView } from 'react-intersection-observer';
 import { HomePageInfo, WithLocale } from '../@types';
-
-// components
 import About from '../components/About';
 import Experiencies from '../components/Experiencies';
 import Techs from '../components/Techs';
 import Contact from '../components/Contact';
-
-// usecases
 import { getHomePageInfo } from '../usecases/getHomePageInfo';
-
-// hooks
 import { useIntersectionStore } from '../stores/navbar';
 import { useLocaleStore } from '../stores/locale';
 import { useTitleStore } from '../stores/title';
-
-// styles
 import 'react-toastify/dist/ReactToastify.css';
-
-// constants
 const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
 
 type HomeSectionProps = {
@@ -38,34 +26,21 @@ const HomeSection = ({
   children,
   full = false,
 }: PropsWithChildren<HomeSectionProps>) => {
-  const squareVariants = {
-    visible: { opacity: 1, transition: { duration: .7 } },
-    hidden: { opacity: 0 }
-  };
-  const controls = useAnimation();
   const [setCurrentElementId] = useIntersectionStore(state => [state.setCurrentElementId])
 
-  const [ref, inView] = useInView();
-  useEffect(() => {
-    if (inView) {
-      setCurrentElementId(`#${id}`)
-      controls.start("visible");
-    } else {
-      controls.start("hidden");
-    }
-  }, [id, controls, inView, setCurrentElementId]);
-
   return (
-    <motion.div
-      id={id}
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={squareVariants}
-      className={`h-screen px-5 snap-center mx-auto ${full ? 'w-full' : 'md:w-5/6 lg:w-4/6'}`}
-    >
-      {children}
-    </motion.div>
+    <Fade>
+      <InView as="section"
+        className={`h-screen px-5 snap-center mx-auto ${full ? 'w-full' : 'md:w-5/6 lg:w-4/6'}`}
+        id={id}
+        threshold={0.8}
+        onChange={(inView) => {
+          if (inView) setCurrentElementId(`#${id}`)
+        }}
+      >
+        {children}
+      </InView>
+    </Fade>
   )
 };
 
