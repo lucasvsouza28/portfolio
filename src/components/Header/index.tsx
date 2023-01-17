@@ -42,6 +42,8 @@ const Header = ({
         }
     }, [buttonRef, isMenuOpen, setIsMenuOpen])
 
+    // TODO: Accessibility | add text to button
+
   return (
     <header className='px-5 py-2 fixed z-50 w-full'>
         <button
