@@ -14,7 +14,7 @@ import { useIntersectionStore } from '../stores/navbar';
 import { useLocaleStore } from '../stores/locale';
 import { useTitleStore } from '../stores/title';
 import 'react-toastify/dist/ReactToastify.css';
-const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
+const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
 
 type HomeSectionProps = {
   id: string;
@@ -118,6 +118,6 @@ export const getStaticProps: GetStaticProps<HomePageInfo & WithLocale> = async (
       ...homePageInfo,
       locale,
     },
-    revalidate: ONE_DAY_IN_MILLISECONDS,
+    revalidate: ONE_DAY_IN_SECONDS,
   }
 }
