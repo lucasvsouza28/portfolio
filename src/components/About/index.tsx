@@ -23,7 +23,7 @@ const About = ({
             title={getPropByLocale(title, locale)}
         />
         <div
-            className='flex flex-col flex-1 items-center space-y-8 lg:flex-row lg:w-3/4 md:space-x-8'
+            className='flex flex-col flex-1 items-center gap-y-8 lg:flex-row lg:w-3/4 md:gap-x-8'
         >
             <div
                 className='flex flex-col gap-4 flex-shrink-0'
