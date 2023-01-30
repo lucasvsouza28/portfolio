@@ -32,6 +32,11 @@ const Techs = ({
                     width={48}
                     height={48}
                     priority
+                    className='rounded-full
+                    border border-1 border-white/20
+                    bg-glass bg-white/40
+                    aspect-square object-contain p-1
+                    h-[48px] w-[48px] sm:h-[60px] sm:w-[60px] lg:h-[80px] lg:w-[80px]'
                 />
             ))}
         </div>
