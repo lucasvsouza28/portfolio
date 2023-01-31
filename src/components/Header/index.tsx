@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useRouter } from 'next/router';
+
 import { motion, useCycle, AnimatePresence } from 'framer-motion';
 
 // components
@@ -30,6 +32,7 @@ const Header = ({
     const [locale] = useLocaleStore(state => [state.locale]);
     const [title] = useTitleStore(state => [state.title])
     const router = useRouter();
+    const router = useRouter();
     
     const links = [
         { title: '#AboutMe', link: '#about' },
@@ -39,6 +42,16 @@ const Header = ({
     ]
 
     const currentElementId = useIntersectionStore(state => state.currentElementId)
+
+    const handleMenuLinkClick = (path: string) => {
+        gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: path })
+        router.push(path);
+    };
+
+    const handleLocaleClick = (locale: string) => {
+        gaEvent({ action: 'click', category: 'language', label: 'language click', value: locale })
+        router.push(locale);
+    };
 
     const handleMenuLinkClick = (path: string) => {
         gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: path })
@@ -113,7 +126,7 @@ const Header = ({
                                     key={i}
                                     className={`p-2 hover:border-b hover:border-b-[#CCC] ${currentElementId === item.link ? 'border-b border-b-[#CCC]' : ''}`}
                                 >
-                                    <a
+                                    <Link
                                         href="/"
                                         className='w-full'
                                         onClick={(e) => {
@@ -122,7 +135,7 @@ const Header = ({
                                         }}
                                     >
                                         {item.title}
-                                    </a>
+                                    </Link>
                                 </li>
                             )) }
                         </ul>
