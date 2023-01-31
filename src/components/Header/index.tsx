@@ -1,12 +1,21 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useCycle, AnimatePresence } from 'framer-motion';
+
+// components
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { useIntersectionStore } from '../../stores/navbar';
+
+// stores
 import { useLocaleStore } from '../../stores/locale';
 import { useTitleStore } from '../../stores/title';
-import getPropByLocale from '../../helpers/getPropByLocale';
-import Image from 'next/image';
+import { useIntersectionStore } from '../../stores/navbar';
+
+// helpers
+import getPropByLocale from '../../helpers/getPropByLocale'
+import { gaEvent } from '../../helpers/ga'
+
+// assets
 import brasil from '../../assets/brasil.jpg'
 import unitedStates from '../../assets/united_states.webp'
 
@@ -94,6 +103,9 @@ const Header = ({
                                     <a
                                         href={item.link}
                                         className='w-full'
+                                        onClick={() => {
+                                            gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: item.link })
+                                        }}
                                     >
                                         {item.title}
                                     </a>
@@ -105,6 +117,9 @@ const Header = ({
                         >
                             <Link
                                 href="pt-BR"
+                                onClick={() => {
+                                    gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'pt-BR' })
+                                }}
                             >
                                 <Image
                                     src={brasil}
@@ -115,6 +130,9 @@ const Header = ({
                             </Link>
                             <Link
                                 href="en"
+                                onClick={() => {
+                                    gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'en' })
+                                }}
                             >
                                 <Image
                                     src={unitedStates}
@@ -149,6 +167,9 @@ const Header = ({
                         >
                             <Link
                                 href={item.link}
+                                onClick={() => {
+                                    gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: item.link })
+                                }}
                                 className={`w-full
                                 relative
                                 hover:before:absolute hover:before:bottom-0 hover:before:w-full hover:before:h-1 hover:before:bg-slate-200
@@ -164,6 +185,9 @@ const Header = ({
                 >
                     <Link
                         href="pt-BR"
+                        onClick={() => {
+                            gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'pt-BR' })
+                        }}
                     >
                         <Image
                             src={brasil}
@@ -174,6 +198,9 @@ const Header = ({
                     </Link>
                     <Link
                         href="en"
+                        onClick={() => {
+                            gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'en' })
+                        }}
                     >
                         <Image
                             src={unitedStates}
