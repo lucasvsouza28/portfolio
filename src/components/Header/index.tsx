@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 import { motion, useCycle, AnimatePresence } from 'framer-motion';
 
 // components
@@ -27,6 +29,7 @@ const Header = ({
     const buttonRef = useRef(null);
     const [locale] = useLocaleStore(state => [state.locale]);
     const [title] = useTitleStore(state => [state.title])
+    const router = useRouter();
     
     const links = [
         { title: '#AboutMe', link: '#about' },
@@ -36,6 +39,16 @@ const Header = ({
     ]
 
     const currentElementId = useIntersectionStore(state => state.currentElementId)
+
+    const handleMenuLinkClick = (path: string) => {
+        gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: path })
+        router.push(path);
+    };
+
+    const handleLocaleClick = (locale: string) => {
+        gaEvent({ action: 'click', category: 'language', label: 'language click', value: locale })
+        router.push(locale);
+    };
 
     useEffect(() => {
         const fn = (event: globalThis.MouseEvent) => {
@@ -101,10 +114,11 @@ const Header = ({
                                     className={`p-2 hover:border-b hover:border-b-[#CCC] ${currentElementId === item.link ? 'border-b border-b-[#CCC]' : ''}`}
                                 >
                                     <a
-                                        href={item.link}
+                                        href="/"
                                         className='w-full'
-                                        onClick={() => {
-                                            gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: item.link })
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleMenuLinkClick(item.link)
                                         }}
                                     >
                                         {item.title}
@@ -116,9 +130,10 @@ const Header = ({
                             className='flex gap-x-2 ml-4'
                         >
                             <Link
-                                href="pt-BR"
-                                onClick={() => {
-                                    gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'pt-BR' })
+                                href="/"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLocaleClick('pt-BR')
                                 }}
                             >
                                 <Image
@@ -129,9 +144,10 @@ const Header = ({
                                 />
                             </Link>
                             <Link
-                                href="en"
-                                onClick={() => {
-                                    gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'en' })
+                                href="/"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLocaleClick('en')
                                 }}
                             >
                                 <Image
@@ -166,9 +182,10 @@ const Header = ({
                             transition-all duration-100"
                         >
                             <Link
-                                href={item.link}
-                                onClick={() => {
-                                    gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: item.link })
+                                href="/"
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    handleMenuLinkClick(item.link)
                                 }}
                                 className={`w-full
                                 relative
@@ -184,9 +201,10 @@ const Header = ({
                     className='flex gap-x-2 ml-4'
                 >
                     <Link
-                        href="pt-BR"
-                        onClick={() => {
-                            gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'pt-BR' })
+                        href="/"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handleLocaleClick('pt-BR')
                         }}
                     >
                         <Image
@@ -197,9 +215,10 @@ const Header = ({
                         />
                     </Link>
                     <Link
-                        href="en"
-                        onClick={() => {
-                            gaEvent({ action: 'click', category: 'language', label: 'language click', value: 'en' })
+                        href="/"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handleLocaleClick('en')
                         }}
                     >
                         <Image
