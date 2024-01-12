@@ -26,7 +26,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
 
 // constants
-const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
+const ONE_HOUR_IN_SECONDS = 60 * 60;
 
 type HomeSectionProps = {
   id: string;
@@ -142,6 +142,6 @@ export const getStaticProps: GetStaticProps<HomePageInfo & WithLocale> = async (
       ...homePageInfo,
       locale,
     },
-    revalidate: ONE_DAY_IN_SECONDS,
+    revalidate: ONE_HOUR_IN_SECONDS,
   }
 }
