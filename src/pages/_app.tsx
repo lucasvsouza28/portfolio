@@ -5,7 +5,6 @@ import apolloClient from '../factories/apollo'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
-  const Comp = Component as any;
   return (
     <>
       <img
@@ -14,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
       />
       <Header />
       <ApolloProvider client={apolloClient}>
-        <Comp {...pageProps} />
+        <Component {...pageProps} />
       </ApolloProvider>
     </>
   )
