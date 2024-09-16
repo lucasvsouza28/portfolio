@@ -9,6 +9,9 @@ const nextConfig = {
     locales: ['pt-BR', 'en'],
     defaultLocale: 'pt-BR',
   },
+  env: {
+    NEXT_PUBLIC_GA_TRACKING_ID: process.env.NEXT_PUBLIC_GA_TRACKING_ID,
+  }
 }
 
 module.exports = nextConfig

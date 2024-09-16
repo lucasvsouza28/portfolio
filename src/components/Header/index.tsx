@@ -1,12 +1,23 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 import { motion, useCycle, AnimatePresence } from 'framer-motion';
+
+// components
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { useIntersectionStore } from '../../stores/navbar';
+
+// stores
 import { useLocaleStore } from '../../stores/locale';
 import { useTitleStore } from '../../stores/title';
-import getPropByLocale from '../../helpers/getPropByLocale';
-import Image from 'next/image';
+import { useIntersectionStore } from '../../stores/navbar';
+
+// helpers
+import getPropByLocale from '../../helpers/getPropByLocale'
+import { gaEvent } from '../../helpers/ga'
+
+// assets
 import brasil from '../../assets/brasil.jpg'
 import unitedStates from '../../assets/united_states.webp'
 
@@ -18,6 +29,7 @@ const Header = ({
     const buttonRef = useRef(null);
     const [locale] = useLocaleStore(state => [state.locale]);
     const [title] = useTitleStore(state => [state.title])
+    const router = useRouter();
     
     const links = [
         { title: '#AboutMe', link: '#about' },
@@ -27,6 +39,16 @@ const Header = ({
     ]
 
     const currentElementId = useIntersectionStore(state => state.currentElementId)
+
+    const handleMenuLinkClick = (path: string) => {
+        gaEvent({ action: 'click', category: 'menu', label: 'menu click', value: path })
+        router.push(path);
+    };
+
+    const handleLocaleClick = (locale: string) => {
+        gaEvent({ action: 'click', category: 'language', label: 'language click', value: locale })
+        router.push(locale);
+    };
 
     useEffect(() => {
         const fn = (event: globalThis.MouseEvent) => {
@@ -91,12 +113,16 @@ const Header = ({
                                     key={i}
                                     className={`p-2 hover:border-b hover:border-b-[#CCC] ${currentElementId === item.link ? 'border-b border-b-[#CCC]' : ''}`}
                                 >
-                                    <a
-                                        href={item.link}
+                                    <Link
+                                        href="/"
                                         className='w-full'
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleMenuLinkClick(item.link)
+                                        }}
                                     >
                                         {item.title}
-                                    </a>
+                                    </Link>
                                 </li>
                             )) }
                         </ul>
@@ -104,7 +130,11 @@ const Header = ({
                             className='flex gap-x-2 ml-4'
                         >
                             <Link
-                                href="pt-BR"
+                                href="/"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLocaleClick('pt-BR')
+                                }}
                             >
                                 <Image
                                     src={brasil}
@@ -114,7 +144,11 @@ const Header = ({
                                 />
                             </Link>
                             <Link
-                                href="en"
+                                href="/"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLocaleClick('en')
+                                }}
                             >
                                 <Image
                                     src={unitedStates}
@@ -148,7 +182,11 @@ const Header = ({
                             transition-all duration-100"
                         >
                             <Link
-                                href={item.link}
+                                href="/"
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    handleMenuLinkClick(item.link)
+                                }}
                                 className={`w-full
                                 relative
                                 hover:before:absolute hover:before:bottom-0 hover:before:w-full hover:before:h-1 hover:before:bg-slate-200
@@ -163,7 +201,11 @@ const Header = ({
                     className='flex gap-x-2 ml-4'
                 >
                     <Link
-                        href="pt-BR"
+                        href="/"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handleLocaleClick('pt-BR')
+                        }}
                     >
                         <Image
                             src={brasil}
@@ -173,7 +215,11 @@ const Header = ({
                         />
                     </Link>
                     <Link
-                        href="en"
+                        href="/"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handleLocaleClick('en')
+                        }}
                     >
                         <Image
                             src={unitedStates}
