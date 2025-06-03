@@ -68,7 +68,7 @@ const Experiencies = ({
                                 />
                             ))}
                         </div>
-                        <p className='p-5 md:mt-10 md:text-2xl'>
+                        <p className='p-5 md:mt-10'>
                             {getPropByLocale(item.description, locale)}
                         </p>
                     </article>
