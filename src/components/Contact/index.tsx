@@ -42,6 +42,10 @@ const Contact = ({
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
+        if (!name || !email || !message || !email.includes('@')){
+            return;
+        }
+
         const response = await fetch('/api/contact', {
             method: 'POST',
             body: JSON.stringify({
